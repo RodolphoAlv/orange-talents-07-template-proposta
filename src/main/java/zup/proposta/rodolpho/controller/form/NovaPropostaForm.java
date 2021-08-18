@@ -25,6 +25,10 @@ public class NovaPropostaForm {
     @Positive
     private BigDecimal salario;
 
+    public String getCpfOuCnpj() {
+        return cpfOuCnpj;
+    }
+
     public Proposta toModel() {
         return new Proposta(cpfOuCnpj, email, nome, salario);
     }

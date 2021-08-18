@@ -13,6 +13,7 @@ import zup.proposta.rodolpho.repository.PropostaRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("propostas")
@@ -25,6 +26,12 @@ public class PropostaController {
     public ResponseEntity<?> cadastrar(
             @RequestBody @Valid NovaPropostaForm dto
     ) {
+
+        Optional<Proposta> possivelProposta = propostaRepository.findByDocumento(dto.getCpfOuCnpj());
+
+        if(possivelProposta.isPresent()) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
 
         Proposta proposta = dto.toModel();
         propostaRepository.save(proposta);
