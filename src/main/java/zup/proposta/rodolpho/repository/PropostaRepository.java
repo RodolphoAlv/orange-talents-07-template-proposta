@@ -8,6 +8,6 @@ import zup.proposta.rodolpho.model.Proposta;
 import java.util.Optional;
 
 public interface PropostaRepository extends CrudRepository<Proposta, Long> {
-    @Query("select 1 from Proposta p where p.cpfOuCnpj = :cpfOuCnpj")
-    Optional<Proposta> findByDocumento(@Param("cpfOuCnpj") String cpfOuCnpj);
+    @Query("select 1 from Proposta p where p.documento = :documento")
+    Optional<Proposta> findByDocumento(@Param("documento") String documento);
 }

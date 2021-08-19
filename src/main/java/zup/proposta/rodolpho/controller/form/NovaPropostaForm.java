@@ -12,10 +12,9 @@ import java.math.BigDecimal;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class NovaPropostaForm {
-
     @NotBlank
     @CpfOuCnpj
-    private String cpfOuCnpj;
+    private String documento;
     @NotBlank
     @Email
     private String email;
@@ -25,11 +24,11 @@ public class NovaPropostaForm {
     @Positive
     private BigDecimal salario;
 
-    public String getCpfOuCnpj() {
-        return cpfOuCnpj;
+    public String getDocumento() {
+        return documento;
     }
 
     public Proposta toModel() {
-        return new Proposta(cpfOuCnpj, email, nome, salario);
+        return new Proposta(documento, email, nome, salario);
     }
 }
