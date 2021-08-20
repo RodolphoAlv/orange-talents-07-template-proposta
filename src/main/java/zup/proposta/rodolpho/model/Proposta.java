@@ -24,6 +24,8 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private CartaoStatus status;
+    @OneToOne(mappedBy = "proposta", cascade = CascadeType.PERSIST)
+    private Cartao cartao;
 
     @Deprecated
     private Proposta() { }
@@ -52,5 +54,9 @@ public class Proposta {
         SolicitacaoStatus solicitacaoStatus = SolicitacaoStatus
                 .valueOf(resultadoSolicitacao);
         this.status = solicitacaoStatus.toCartaoStatus();
+    }
+
+    public void atualizaCartao(Cartao cartao) {
+        this.cartao = cartao;
     }
 }

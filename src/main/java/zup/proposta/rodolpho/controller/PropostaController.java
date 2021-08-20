@@ -2,10 +2,7 @@ package zup.proposta.rodolpho.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import zup.proposta.rodolpho.controller.dto.ResultadoAnaliseDto;
 import zup.proposta.rodolpho.controller.dto.SolicitacaoAnaliseDto;
@@ -57,5 +54,15 @@ public class PropostaController {
                 .toUri();
 
         return ResponseEntity.created(localizadoEm).body(proposta);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?>buscarPorId(@PathVariable("id") Long id) {
+        Optional<Proposta> possivelProposta = propostaRepository.findById(id);
+        if(possivelProposta.isPresent()) {
+            return ResponseEntity.ok(possivelProposta.get());
+        }
+        
+        return ResponseEntity.unprocessableEntity().build();
     }
 }
