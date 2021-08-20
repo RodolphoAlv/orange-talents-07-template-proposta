@@ -12,6 +12,7 @@ public interface PropostaRepository extends CrudRepository<Proposta, Long> {
     @Query("select 1 from Proposta p where p.documento = :documento")
     Optional<Proposta> findByDocumento(@Param("documento") String documento);
 
-    @Query(value = "select * from proposta where proposta.id not in (select cartao.proposta_id from cartao)", nativeQuery = true)
+    @Query(value = "select * from proposta where proposta.id" +
+            " not in (select cartao.proposta_id from cartao) limit 20", nativeQuery = true)
     List<Proposta> findAllPropostaCartaoNullStatusElegivel();
 }

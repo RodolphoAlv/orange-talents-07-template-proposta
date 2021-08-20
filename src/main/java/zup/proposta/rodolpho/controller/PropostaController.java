@@ -63,6 +63,6 @@ public class PropostaController {
             return ResponseEntity.ok(possivelProposta.get());
         }
         
-        return ResponseEntity.unprocessableEntity().build();
+        return ResponseEntity.notFound().build();
     }
 }
