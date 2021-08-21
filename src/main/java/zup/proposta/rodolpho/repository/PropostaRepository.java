@@ -13,6 +13,7 @@ public interface PropostaRepository extends CrudRepository<Proposta, Long> {
     Optional<Proposta> findByDocumento(@Param("documento") String documento);
 
     @Query(value = "select * from proposta where proposta.id" +
-            " not in (select cartao.proposta_id from cartao) limit 20", nativeQuery = true)
+            " not in (select cartao.proposta_id from cartao)" +
+            " order by proposta.id asc limit 20", nativeQuery = true)
     List<Proposta> findAllPropostaCartaoNullStatusElegivel();
 }
