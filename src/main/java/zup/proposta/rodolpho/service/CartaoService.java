@@ -1,4 +1,4 @@
-package zup.proposta.rodolpho.controller;
+package zup.proposta.rodolpho.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,14 +9,12 @@ import zup.proposta.rodolpho.model.Cartao;
 import zup.proposta.rodolpho.model.Proposta;
 import zup.proposta.rodolpho.repository.CartaoRepository;
 import zup.proposta.rodolpho.repository.PropostaRepository;
-import zup.proposta.rodolpho.service.CartaoClient;
-import zup.proposta.rodolpho.service.SolicitacaoClient;
 
 import java.util.List;
 import java.util.Objects;
 
 @Component
-public class CartaoController {
+public class CartaoService {
 
     @Autowired
     private PropostaRepository propostaRepository;
@@ -32,15 +30,13 @@ public class CartaoController {
 
         List<Proposta> propostas = propostaRepository.findAllPropostaCartaoNullStatusElegivel();
 
-        for(Proposta proposta : propostas) {
+        for (Proposta proposta : propostas) {
             CartaoResponse cartaoVerificado = cartaoClient.verifica(SolicitacaoAnaliseDto.toDto(proposta));
             Cartao cartao = cartaoVerificado.toModel(proposta);
 
-            if(Objects.nonNull(cartao.getId())) {
+            if (Objects.nonNull(cartao.getId())) {
                 cartaoRepository.save(cartao);
             }
         }
     }
-
-
 }

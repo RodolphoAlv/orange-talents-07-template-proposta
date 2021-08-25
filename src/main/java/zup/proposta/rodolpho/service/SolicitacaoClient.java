@@ -12,5 +12,4 @@ import javax.validation.Valid;
 public interface SolicitacaoClient {
     @PostMapping("solicitacao")
     ResultadoAnaliseDto analisa(@RequestBody @Valid SolicitacaoAnaliseDto dto);
-
 }

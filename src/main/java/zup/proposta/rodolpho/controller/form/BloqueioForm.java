@@ -1,19 +1,20 @@
-package zup.proposta.rodolpho.controller.response;
+package zup.proposta.rodolpho.controller.form;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import zup.proposta.rodolpho.model.Bloqueio;
 import zup.proposta.rodolpho.model.Cartao;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class BloqueioResponse {
-    private String id;
-    private LocalDateTime bloqueadoEm;
+public class BloqueioForm {
+    @NotBlank
     private String sistemaResponsavel;
+    @NotNull
     private Boolean ativo;
 
     public Bloqueio toModel(Cartao cartao) {
-        return new Bloqueio(Long.valueOf(id), bloqueadoEm, sistemaResponsavel, ativo, cartao);
+        return new Bloqueio(sistemaResponsavel, ativo, cartao);
     }
 }
