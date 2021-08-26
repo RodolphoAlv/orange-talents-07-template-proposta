@@ -138,6 +138,10 @@ services:
       - prometheus-volume:/etc/prometheus/
     ports:
       - "9090:9090"
+    environment:
+      NOME_DA_APLICACAO: serviço de proposta
+      AMBIENTE: desenvolvimento
+
 
   grafana:
     image: grafana/grafana:7.3.4
