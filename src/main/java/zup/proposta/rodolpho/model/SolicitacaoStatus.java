@@ -3,16 +3,16 @@ package zup.proposta.rodolpho.model;
 public enum SolicitacaoStatus {
     COM_RESTRICAO {
         @Override
-        public CartaoStatus toCartaoStatus() {
-            return CartaoStatus.NAO_ELEGIVEL;
+        public PropostaStatus toCartaoStatus() {
+            return PropostaStatus.NAO_ELEGIVEL;
         }
     },
     SEM_RESTRICAO {
         @Override
-        public CartaoStatus toCartaoStatus() {
-            return CartaoStatus.ELEGIVEL;
+        public PropostaStatus toCartaoStatus() {
+            return PropostaStatus.ELEGIVEL;
         }
     };
 
-    public abstract CartaoStatus toCartaoStatus();
+    public abstract PropostaStatus toCartaoStatus();
 }

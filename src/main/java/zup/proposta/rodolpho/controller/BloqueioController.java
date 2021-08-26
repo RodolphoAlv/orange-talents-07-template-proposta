@@ -10,6 +10,7 @@ import zup.proposta.rodolpho.controller.form.BloqueioForm;
 import zup.proposta.rodolpho.controller.response.BloqueioResponse;
 import zup.proposta.rodolpho.model.Bloqueio;
 import zup.proposta.rodolpho.model.Cartao;
+import zup.proposta.rodolpho.model.CartaoStatus;
 import zup.proposta.rodolpho.repository.BloqueioRepository;
 import zup.proposta.rodolpho.repository.CartaoRepository;
 import zup.proposta.rodolpho.service.CartaoClient;
@@ -44,7 +45,8 @@ public class BloqueioController {
             return ResponseEntity.notFound().build();
         }
 
-        Bloqueio bloqueio = dto.toModel(possivelCartao.get());
+        Cartao cartao = possivelCartao.get();
+        Bloqueio bloqueio = dto.toModel(cartao);
         Map<String, Object> status = null;
 
         try {
@@ -55,7 +57,14 @@ public class BloqueioController {
         } catch (FeignException.FeignClientException.UnprocessableEntity e) {
            return ResponseEntity.unprocessableEntity().build();
         }
+        cartao
+                .setCartaoStatus(
+                        CartaoStatus.valueOf(
+                                status.get("resultado").toString()
+                        )
+                );
 
+        cartaoRepository.save(cartao);
         bloqueioRepository.save(bloqueio);
 
         URI uri = ServletUriComponentsBuilder

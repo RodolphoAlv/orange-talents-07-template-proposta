@@ -31,6 +31,8 @@ public class Cartao {
     @OneToOne
     @JsonIgnore
     private Proposta proposta;
+    @Enumerated(EnumType.STRING)
+    private CartaoStatus status;
 
     @Deprecated
     public Cartao() {}
@@ -59,6 +61,7 @@ public class Cartao {
         this.renegociacao = renegociacao;
         this.vencimento = vencimento;
         this.proposta = proposta;
+        this.status = CartaoStatus.DESBLOQUEADO;
     }
 
     public Cartao(String id) {
@@ -67,5 +70,9 @@ public class Cartao {
 
     public String getId() {
         return id;
+    }
+
+    public void setCartaoStatus(CartaoStatus resultado) {
+        this.status = resultado;
     }
 }

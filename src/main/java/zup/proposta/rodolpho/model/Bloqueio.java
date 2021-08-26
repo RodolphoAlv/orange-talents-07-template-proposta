@@ -1,6 +1,7 @@
 package zup.proposta.rodolpho.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class Bloqueio {
     private LocalDateTime bloqueadoEm = LocalDateTime.now();
     private String sistemaResponsavel;
     private Boolean ativo;
+    @JsonIgnore
     @ManyToOne
     private Cartao cartao;
 
@@ -36,7 +38,7 @@ public class Bloqueio {
     }
 
     public Bloqueio(String sistemaResponsavel, Boolean ativo, Cartao cartao) {
-        this(null, null, sistemaResponsavel, ativo, cartao);
+        this(null, LocalDateTime.now(), sistemaResponsavel, ativo, cartao);
     }
 
     public String getSistemaResponsavel() {

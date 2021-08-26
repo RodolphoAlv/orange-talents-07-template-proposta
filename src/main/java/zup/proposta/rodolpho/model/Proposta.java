@@ -23,7 +23,7 @@ public class Proposta {
     @Positive
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
-    private CartaoStatus status;
+    private PropostaStatus status;
     @OneToOne(mappedBy = "proposta", cascade = CascadeType.PERSIST)
     private Cartao cartao;
 
