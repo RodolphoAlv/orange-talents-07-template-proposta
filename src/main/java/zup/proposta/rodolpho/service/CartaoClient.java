@@ -6,25 +6,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import zup.proposta.rodolpho.controller.dto.SolicitacaoAnaliseDto;
 import zup.proposta.rodolpho.controller.form.AvisoForm;
+import zup.proposta.rodolpho.controller.form.NovaCarteiraForm;
 import zup.proposta.rodolpho.controller.response.CartaoResponse;
 
 import java.util.Map;
 
-@FeignClient(name = "cartoes", url = "http://localhost:8888/api/")
+@FeignClient(name = "cartoes", url = "http://localhost:8888/api/cartoes/")
 public interface CartaoClient {
 
-    @PostMapping("cartoes")
+    @PostMapping
     public CartaoResponse verifica(@RequestBody SolicitacaoAnaliseDto dto);
 
-    @PostMapping("cartoes/{cartaoId}/bloqueios")
+    @PostMapping("{cartaoId}/bloqueios")
     public Map<String, Object> bloqueia(
             @RequestBody Map<String, String> sistemaResponsavel,
             @PathVariable("cartaoId") String cartaoId
     );
 
-    @PostMapping("cartoes/{cartaoId}/avisos")
+    @PostMapping("{cartaoId}/avisos")
     public Map<String, String> avisa(
             @RequestBody AvisoForm dto,
+            @PathVariable("cartaoId") String cartaoId
+    );
+
+    @PostMapping("{cartaoId}/carteiras")
+    public Map<String, String> associa(
+            @RequestBody NovaCarteiraForm dto,
             @PathVariable("cartaoId") String cartaoId
     );
 }

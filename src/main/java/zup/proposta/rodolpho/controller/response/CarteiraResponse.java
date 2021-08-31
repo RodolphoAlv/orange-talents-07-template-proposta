@@ -14,6 +14,6 @@ public class CarteiraResponse {
     private String emissor;
 
     public Carteira toModel(Cartao cartao) {
-        return new Carteira(id, email, associadaEm, emissor, cartao);
+        return new Carteira(id, email, associadaEm, emissor, cartao, null);
     }
 }
