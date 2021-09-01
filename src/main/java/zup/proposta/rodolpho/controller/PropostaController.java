@@ -1,5 +1,7 @@
 package zup.proposta.rodolpho.controller;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,16 +27,24 @@ public class PropostaController {
     @Autowired
     private SolicitacaoClient solicitacaoClient;
 
+    @Autowired
+    private Tracer tracer;
+
     @PostMapping
     public ResponseEntity<?> cadastrar(
             @RequestBody @Valid NovaPropostaForm dto
     ) {
+
+        Span activeSpan = tracer.activeSpan();
 
         Optional<Proposta> possivelProposta = propostaRepository.findByDocumento(dto.getDocumento());
 
         if(possivelProposta.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
+
+        activeSpan.setTag("user.email", "rodolpho.alves@zup.com.br");
+        activeSpan.log("Teste log: cadastro proposta");
 
         Proposta proposta = dto.toModel();
         propostaRepository.save(proposta);
@@ -46,6 +56,8 @@ public class PropostaController {
         );
 
         propostaRepository.save(proposta);
+
+        activeSpan.setBaggageItem("proposta.id", proposta.getId().toString());
 
         URI localizadoEm = ServletUriComponentsBuilder
                 .fromCurrentRequest()
